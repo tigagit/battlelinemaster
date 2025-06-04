@@ -1,4 +1,4 @@
-import { INVALID_MOVE } from "boardgame.io/core"
+const { INVALID_MOVE } = require("boardgame.io/core")
 
 var DEFAULT_TROOP_DECK = []
 var TROOP_DECK_COLORS = ["r", "o", "y", "g", "b", "p"]
@@ -50,7 +50,7 @@ for (let i = 0; i !== 10; i++) {
 }
 var DEFAULT_TACTICS_DECK = ["ALX", "DAR", "CAV", "321", "TRA", "DES", "RDP", "SCT", "FOG", "MUD"]
 
-export const BattleLine = {
+const BattleLine = {
   name: "battle-line",
   setup: () => {
     const troop_deck = DEFAULT_TROOP_DECK.slice()
@@ -692,7 +692,7 @@ function canPlayTroopCard(board_cards, player_id, flag_statuses, hand) {
   return false
 }
 
-export function canPassTurn(G, ctx) {
+function canPassTurn(G, ctx) {
   if (ctx.numMoves === 0) {
     return !canPlayTroopCard(G.board_cards, ctx.currentPlayer, G.flag_statuses, G.player_hands[ctx.currentPlayer])
   } else {
@@ -700,7 +700,7 @@ export function canPassTurn(G, ctx) {
   }
 }
 
-export function canDisplaceCard(G, ctx, card_str, displaced_card_str, player_id, flag_id) {
+function canDisplaceCard(G, ctx, card_str, displaced_card_str, player_id, flag_id) {
   if (!isFormationCard(displaced_card_str)) {
     return false
   }
@@ -719,10 +719,10 @@ export function canDisplaceCard(G, ctx, card_str, displaced_card_str, player_id,
   return true
 }
 
-export function isTroopCard(card) {
+function isTroopCard(card) {
   return card.length === 2
 }
-export function isTacticsCard(card) {
+function isTacticsCard(card) {
   return card.length === 3
 }
 
@@ -734,11 +734,11 @@ function isLeaderTacticsCard(card) {
   return ["ALX", "DAR"].indexOf(card) >= 0
 }
 
-export function isDisplacementCard(card) {
+function isDisplacementCard(card) {
   return ["TRA", "DES", "RDP"].indexOf(card) >= 0
 }
 
-export function isScoutCard(card) {
+function isScoutCard(card) {
   return ["SCT"].indexOf(card) >= 0
 }
 
@@ -781,4 +781,14 @@ function flagHasMud(formations) {
 function getOpponentID(player_id) {
   if (player_id === "0") return "1"
   return "0"
+}
+
+module.exports = {
+  BattleLine,
+  canPassTurn,
+  canDisplaceCard,
+  isTroopCard,
+  isTacticsCard,
+  isDisplacementCard,
+  isScoutCard,
 }
