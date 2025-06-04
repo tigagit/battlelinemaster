@@ -1,11 +1,9 @@
 // src/server.js
 
-import { Server } from "boardgame.io/server"
-import { BattleLine } from "./Game"
-import cors from "cors"
+const { Server } = require("boardgame.io/server")
+const { BattleLine } = require("./Game")
 
-const dotenv = require("dotenv")
-dotenv.config()
+require("dotenv").config()
 
 const server = Server({
   games: [BattleLine],
@@ -13,6 +11,7 @@ const server = Server({
 })
 
 // Add CORS middleware
+const cors = require("cors")
 const app = server.app
 app.use(
   cors({
@@ -21,11 +20,7 @@ app.use(
   }),
 )
 
-// ONLINE:
 const PORT = process.env.PORT || 8000
-// LOCAL:
-// const PORT = 8000;
-// END
 
 server.run(PORT, () => {
   console.log(`Server running on port ${PORT}`)
